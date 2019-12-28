@@ -12,7 +12,7 @@ option(PACKAGE_TESTS "Build the tests" ON)
 if(PACKAGE_TESTS)
     enable_testing()
     include(GoogleTest)
-    add_subdirectory(test)
+    add_subdirectory(tests)
 endif()
 
 # include sub projects

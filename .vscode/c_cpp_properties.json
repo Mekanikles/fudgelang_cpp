@@ -5,10 +5,11 @@
 			"compileCommands": "${workspaceFolder}/build/compile_commands.json",
 			"cppStandard": "c++17",
 			"includePath": [
-				"THIS SHOULD NOT BE NECESSARY :(",
+				"THIS SHOULD NOT BE NECESSARY, CMAKE COMP CMDS IS NOT WORKING :(",
 				"${workspaceFolder}/**",
 				"${workspaceFolder}/external/googletest/googletest/include/**"
-			]
+			],
+			"compilerPath": "/usr/bin/clang++"
 		}
 	],
 	"version": 4

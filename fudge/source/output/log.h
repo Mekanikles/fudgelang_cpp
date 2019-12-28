@@ -1,6 +1,8 @@
 #pragma once
 #include "core/core.h"
 
+#include <iostream>
+
 class Indenter
 {
 public:

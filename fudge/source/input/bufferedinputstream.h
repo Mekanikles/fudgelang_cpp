@@ -14,8 +14,7 @@ public:
 	{
 	}
 
-	uint currentColumn() { return m_column; }
-	uint currentRow() { return m_row; }
+	uint currentPos() { return m_bufferEndStreamPos - (m_end - m_begin); }
 
 	void advance()
 	{
@@ -23,16 +22,6 @@ public:
 
 		const char c = m_circBuffer[m_begin++];
 		m_begin = m_begin % BUF_SIZE;
-
-		if (c == '\n')
-		{
-			m_row++;
-			m_column = 0;
-		}
-		else
-		{
-			m_column++;
-		}
 	}
 
 	char peek()
@@ -88,6 +77,8 @@ private:
 			}
 		}
 
+		m_bufferEndStreamPos = stream.tellg();
+
 		return bufferedLength();
 	}
 
@@ -98,8 +89,7 @@ private:
 	uint m_begin = 0;
 	uint m_end = 0;
 	std::unique_ptr<std::istream> m_inStream;
-	uint m_row = 0;
-	uint m_column = 0;
+	uint m_bufferEndStreamPos = 0;
 };
 
 }

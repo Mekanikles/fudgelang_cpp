@@ -19,7 +19,10 @@ public:
 private:
 	BufferedInputStream m_inStream;
 
-	Token createToken(TokenType type);
+	Token createToken(TokenType type, string identifier = string());
+
+	void skipWhitespaceAndComments();
+	Token scanStringLiteral();
 };
 
 }
