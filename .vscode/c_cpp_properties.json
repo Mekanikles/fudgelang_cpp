@@ -1,0 +1,15 @@
+{
+	"configurations": [
+		{
+			"name": "Mac",
+			"compileCommands": "${workspaceFolder}/build/compile_commands.json",
+			"cppStandard": "c++17",
+			"includePath": [
+				"THIS SHOULD NOT BE NECESSARY :(",
+				"${workspaceFolder}/**",
+				"${workspaceFolder}/external/googletest/googletest/include/**"
+			]
+		}
+	],
+	"version": 4
+}
