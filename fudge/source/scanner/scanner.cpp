@@ -29,9 +29,15 @@ Token Scanner::createToken(TokenType type, string identifier)
 {
 	Token token;
 	token.type = type;
-	token.bufferPos = m_inStream.currentPos();
 	token.identifier = identifier;
 	return token;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+void Scanner::reportError(string message, uint bufferPos, uint length)
+{
+	m_errors.push_back(Error{message, bufferPos, length});
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -68,25 +74,27 @@ void Scanner::skipWhitespaceAndComments()
 				}
 				else if (n == '*')
 				{
+					vector<uint> openBlockStartPositions;
+
 					// Nestable block comments
+					openBlockStartPositions.push_back(inStream.currentPos());
 					inStream.advance();
 					inStream.advance();
-					int blockLevel = 1;
 					char c2;
 					while (!scanner::isAtEnd(c2 = inStream.peek()))
 					{
 						if (c2 == '/' && inStream.peekAhead() == '*')
 						{
+							openBlockStartPositions.push_back(inStream.currentPos());
 							inStream.advance();
 							inStream.advance();
-							++blockLevel;
 						}
 						else if (c2 == '*' && inStream.peekAhead() == '/')
 						{
+							openBlockStartPositions.pop_back();
 							inStream.advance();
 							inStream.advance();
-							--blockLevel;
-							if (blockLevel == 0)
+							if (openBlockStartPositions.empty())
 								break;
 						}
 						else
@@ -94,10 +102,20 @@ void Scanner::skipWhitespaceAndComments()
 							inStream.advance();
 						}
 					}
-					// TODO: Add warning on blockLevel != 0
+					
+					for (uint pos : openBlockStartPositions)
+						reportError("Block comment was not closed", pos, 2);
 				}
 				break;
 			}
+			case '*':
+				if (inStream.peekAhead() == '/')
+				{
+					reportError("Stray block comment end", inStream.currentPos(), 2);
+					inStream.advance();
+					inStream.advance();					
+				}
+				break;
 			default:
 				return;
 		}

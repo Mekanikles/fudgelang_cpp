@@ -14,7 +14,7 @@ public:
 	{
 	}
 
-	uint currentPos() { return m_bufferEndStreamPos - (m_end - m_begin); }
+	uint currentPos() { return m_bufferEndStreamPos - bufferedLength(); }
 
 	void advance()
 	{
@@ -65,20 +65,21 @@ private:
 		{
 			uint fill1 = std::min(BUF_SIZE - m_end, fill);
 			stream.read(&m_circBuffer[m_end], fill1);
-			m_end += stream.gcount();
-
+			const uint readChars = stream.gcount();
+			m_bufferEndStreamPos += readChars;
+			m_end += readChars;
 			m_end = m_end % BUF_SIZE;
 
 			uint fill2 = fill - fill1;
 			if (fill2)
 			{
 				stream.read(&m_circBuffer[m_end], fill2);
-				m_end += stream.gcount();
+				const uint readChars = stream.gcount();
+				m_bufferEndStreamPos += readChars;
+				m_end += readChars;
 			}
 		}
-
-		m_bufferEndStreamPos = stream.tellg();
-
+		
 		return bufferedLength();
 	}
 

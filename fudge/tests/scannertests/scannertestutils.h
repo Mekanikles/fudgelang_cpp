@@ -12,3 +12,5 @@ void verifyScannedTokens(Scanner* scanner, const TokenType (&expectedTokens)[tok
 {
 	verifyScannedTokens(scanner, &expectedTokens[0], tokenCount);
 }
+
+void scanToEnd(Scanner* scanner);

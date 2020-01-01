@@ -31,3 +31,21 @@ TEST(Scanner, ScanNestedBlockComments)
 
 	verifyScannedTokens(&scanner, { TokenType::Comma, TokenType::Comma });
 }
+
+TEST(Scanner, ScanMismatchedBlockComments) 
+{
+	BufferSource source("*//*/**//*/**/");
+	Scanner scanner(&source);
+
+	scanToEnd(&scanner);
+	
+	ASSERT_EQ(scanner.getErrorCount(), 3);
+	// Mismatched block close
+	EXPECT_EQ(scanner.getErrors()[0].bufferPos, 0);
+
+	// Mismatched block open
+	EXPECT_EQ(scanner.getErrors()[1].bufferPos, 2);
+
+	// Mismatched block open
+	EXPECT_EQ(scanner.getErrors()[2].bufferPos, 8);	
+}
