@@ -25,11 +25,10 @@ Scanner::Scanner(const Source* source)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-Token Scanner::createToken(TokenType type, string identifier)
+Token Scanner::createToken(TokenType type, string data)
 {
-	Token token;
-	token.type = type;
-	token.identifier = identifier;
+	Token token(type);
+	token.data = data;
 	return token;
 }
 

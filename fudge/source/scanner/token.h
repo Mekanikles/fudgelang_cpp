@@ -17,10 +17,23 @@ enum class TokenType
 struct Token
 {
 	TokenType type;
-	// TODO: Don't store identifiers like this
+	// TODO: Don't store data like this
 	//	store a pointer to a data block instead of use the 
 	//	bufferPos + length to point into the source buffer
-	string identifier;
+	string data;
+		
+	Token()
+		: type(TokenType::Invalid)
+	{}
+	
+	Token(TokenType type)
+		: type(type)
+	{}
+
+	operator bool() const
+	{
+		return type != TokenType::Invalid;
+	}
 };
 
 }

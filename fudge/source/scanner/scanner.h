@@ -27,7 +27,7 @@ public:
 	const vector<Error>& getErrors() { return m_errors; }
 	
 protected:
-	Token createToken(TokenType type, string identifier = string());
+	Token createToken(TokenType type, string data = string());
 
 	void reportError(string message, uint bufferPos, uint length = 1);
 

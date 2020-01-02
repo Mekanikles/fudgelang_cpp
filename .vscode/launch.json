@@ -6,7 +6,7 @@
 	"configurations": [
 		{
 			"name": "Launch fugdetests",
-			"type": "cppdbg",
+			"type": "lldb",
 			"request": "launch",
 			"program": "${workspaceRoot}/build/fudge/fudgetests",
 			"args": [],

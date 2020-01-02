@@ -29,3 +29,29 @@ TEST(Input, NonEmptyInputStream)
 		++p;
 	}
 }
+
+TEST(Input, CurrentPos) 
+{
+	const char* input = 
+		"123456789\n"
+		"123456789\n"
+		"123456789\n"
+		"123456789\n"
+		"123456789\n"
+		"123456789\n"
+		"123456789\n"
+		"123456789\n"
+		"123456789\n"
+		"123456789\n";
+		
+	BufferSource source(input);
+	BufferedInputStream inStream(source.createStream());	
+	int p = 0;
+	while (inStream.peek() != EOF)
+	{
+		EXPECT_EQ(inStream.currentPos(), p++);
+		inStream.advance();
+	}
+
+	EXPECT_EQ(inStream.currentPos(), 100);
+}

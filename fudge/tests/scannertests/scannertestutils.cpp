@@ -2,6 +2,8 @@
 
 #include "gtest/gtest.h"
 
+///////////////////////////////////////////////////////////////////////////////
+
 void verifyScannedTokens(Scanner* scanner, const TokenType* expectedTokens, int tokenCount)
 {
 	for (int p = 0; p < tokenCount; ++p)
@@ -14,6 +16,8 @@ void verifyScannedTokens(Scanner* scanner, const TokenType* expectedTokens, int 
 	EXPECT_EQ(token.type, TokenType::EndOfScan);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+
 void scanToEnd(Scanner* scanner)
 {
 	Token token;
@@ -22,3 +26,5 @@ void scanToEnd(Scanner* scanner)
 		token = scanner->readToken();
 	} while (token.type != TokenType::EndOfScan);
 }
+
+///////////////////////////////////////////////////////////////////////////////
