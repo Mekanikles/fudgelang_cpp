@@ -29,6 +29,8 @@ enum class NodeType
 	Count
 };
 
+string toString(NodeType type);
+
 struct Node 
 {
 	virtual NodeType getType() = 0;
@@ -89,7 +91,7 @@ struct BinaryOp : public Expression
 
 interface Visitor
 {
-	virtual void visit(Node* node) { node->acceptChildren(this); }
+	virtual void visit(struct Node* node) { node->acceptChildren(this); }
 	virtual void visit(struct Statement* node) { visit(static_cast<Node*>(node)); }
 	virtual void visit(struct Expression* node) { visit(static_cast<Statement*>(node)); }
 	virtual void visit(struct StatementBody* node) { visit(static_cast<Statement*>(node)); }

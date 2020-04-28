@@ -15,7 +15,10 @@ public:
 	{
 		auto type = m_expectedNodes.back(); 
 		m_expectedNodes.pop_back();
-		EXPECT_EQ(node->getType(), type);
+		EXPECT_EQ(node->getType(), type) << 
+			"Mismatched AST Node type. Expected: " << toString(type) <<
+			", Found: " << toString(node->getType());
+			
 		node->acceptChildren(this);
 	}
 
